@@ -135,7 +135,8 @@ function EmployeeInfo() {
        // will add write to team.html file 
 
         else { const renderedHTML = render(employees)
-               console.log(renderedHTML)};
+               console.log(renderedHTML)
+               fs.writeFileSync("team.html", renderedHTML)};
     })
 }
 
