@@ -1,6 +1,7 @@
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
+// const Team = require("./lib/Team");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -16,7 +17,7 @@ const render = require("./lib/htmlRenderer");
 
 const employees = [];
 
-let teamTitle;
+// let teamName;
 
 // function to prompt input for Project Title and team information - it will loop until user replies n to prompt to add more employees 
 // if then will call the function to render the HTML and write to team page
@@ -26,25 +27,22 @@ function getData(){
         {
             type: "input",
             message: "What is this Project's name?",
-            name: "teamTitle",
+            name: "teamName",
         }])
         .then( answers => { 
             
-            teamName = answers.teamTitle;
-            console.log(teamName);
-            
+            const teamName = answers.teamName;
+            console.log("should be team name")            
             // var main = fs.readFileSync('./templates/main.html', 'utf8');
             // main = main.replace({teamTitle}, teamTitle);
-            // console.log(main);
+            console.log(teamName);
             
-            EmployeeInfo()
+            EmployeeInfo(teamName)
              })
-
-
         }
 
 
-function EmployeeInfo() {
+function EmployeeInfo(teamName) {
     inquirer.prompt([
 
         {
@@ -147,12 +145,28 @@ function EmployeeInfo() {
             EmployeeInfo();
         }
 
+       // updates the main.html page with team name 
        // calls function from htmlRenderer.js, writes the html to the console log
        // and writes the rendered html to team.html file into the output folder 
 
-        else { const renderedHTML = render(employees)
-               console.log(renderedHTML)
+        else { 
+            
+       // updating main.html template with teamName
+
+            var main = fs.readFileSync('./templates/main.html', 'utf8');
+            main = main.replace("teamName", teamName);
+            fs.writeFileSync('./templates/main.html', main, 'utf8');
+
+       // calling function to render employee data 
+
+            const renderedHTML = render(employees)
+               console.log(renderedHTML);
+               console.log(teamName);
+
+       // writing team file as rendered to output directory
+
                fs.writeFileSync(outputPath, renderedHTML)};
+
     })
 }
 
