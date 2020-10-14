@@ -142,7 +142,7 @@ function EmployeeInfo(teamName) {
         // if yes, gather info for next employee
         
         if (answers.newEmployee === true) {
-            EmployeeInfo();
+            EmployeeInfo(teamName);
         }
 
        // updates the main.html page with team name 
