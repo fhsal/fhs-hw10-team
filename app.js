@@ -5,6 +5,8 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
+// defining path to where output file will be saved 
+
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
@@ -16,7 +18,6 @@ const employees = [];
 
 let teamTitle;
 
-
 // function to prompt input for Project Title and team information - it will loop until user replies n to prompt to add more employees 
 // if then will call the function to render the HTML and write to team page
 
@@ -27,11 +28,16 @@ function getData(){
             message: "What is this Project's name?",
             name: "teamTitle",
         }])
-        .then( answers => { teamTitle = answers.teamTitle;
-
+        .then( answers => { 
+            
+            teamName = answers.teamTitle;
+            console.log(teamName);
+            
+            // var main = fs.readFileSync('./templates/main.html', 'utf8');
+            // main = main.replace({teamTitle}, teamTitle);
+            // console.log(main);
+            
             EmployeeInfo()
-            console.log(teamTitle);
-            // console.log(teamMembers);
              })
 
 
@@ -49,6 +55,7 @@ function EmployeeInfo() {
         },
 
         // Inputs based on the employeeRole above
+        // Manager prompts are duplicated so that the user knows those relate to that role, but could also use employee prompts 
 
         {
             type: "input",
@@ -92,12 +99,18 @@ function EmployeeInfo() {
             name: "employeeEmail",
             when: (userInput) => userInput.employeeRole !== "Manager"
         },
+        
+        // Engineer specific input 
+
         {
             type: "input",
             message: "What is the Engineer's Github?",
             name: "github",
             when: (userInput) => userInput.employeeRole === "Engineer"
         },
+        
+        // Intern specific input 
+
         {
             type: "input",
             message: "What's the Intern's school?",
@@ -127,17 +140,22 @@ function EmployeeInfo() {
            const engineer = new Engineer (answers.employeeName, answers.employeeId, answers.employeeEmail, answers.github);
            employees.push(engineer);
         }
+        
+        // if yes, gather info for next employee
+        
         if (answers.newEmployee === true) {
             EmployeeInfo();
         }
 
        // calls function from htmlRenderer.js, writes the html to the console log
-       // will add write to team.html file 
+       // and writes the rendered html to team.html file into the output folder 
 
         else { const renderedHTML = render(employees)
                console.log(renderedHTML)
-               fs.writeFileSync("team.html", renderedHTML)};
+               fs.writeFileSync(outputPath, renderedHTML)};
     })
 }
+
+// calling function
 
 getData();
