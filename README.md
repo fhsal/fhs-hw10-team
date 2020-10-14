@@ -27,5 +27,5 @@ The application includes a number of components, they include the following :
 
 # Screen shot of generated Team page 
 
-[img]!(https://github.com/fhsal/fhs-hw10-team/blob/main/teamScreenShot.jpg)
+![img](https://github.com/fhsal/fhs-hw10-team/blob/main/teamScreenShot.jpg)
 
