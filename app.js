@@ -66,7 +66,7 @@ function EmployeeInfo() {
         {
             type: "input",
             message: "What is the Manager's employee ID?",
-            name: "employeeEmail",
+            name: "employeeId",
             when: (userInput) => userInput.employeeRole === "Manager"
         },
         {
@@ -78,7 +78,7 @@ function EmployeeInfo() {
         {
             type: "input",
             message: "What is the Manager's office Number?",
-            name: "managerOffice",
+            name: "officeNumber",
             when: (userInput) => userInput.employeeRole === "Manager"
         },
         {
@@ -129,7 +129,7 @@ function EmployeeInfo() {
         // Pushes a new employees into the employees array with the appropriate information based upon role 
   
         if (answers.employeeRole === "Manager") {
-            const manager = new Manager(answers.employeeName, answers.employeeId, answers.employeeEmail, answers.school);
+            const manager = new Manager(answers.employeeName, answers.employeeId, answers.employeeEmail, answers.officeNumber);
             employees.push(manager);
         } 
         else if (answers.employeeRole === "Intern") {
